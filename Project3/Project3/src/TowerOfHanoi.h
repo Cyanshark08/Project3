@@ -18,8 +18,12 @@ public:
 	TOHState GetState() const;
 
 public:
-	class E_InvalidMovement
+	class E_IllegalMove
 	{
+	public:
+
+
+	private:
 
 	};
 
