@@ -15,6 +15,19 @@ TowerOfHanoi::TowerOfHanoi(size_t p_NumOfTowers)
 
 void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
 {
+	Disk newTopDisk = m_StackList[p_OldTower - 1].top();
+	Disk oldTopDisk = m_StackList[p_NewTower - 1].top();
+
+	if (newTopDisk > oldTopDisk)
+		throw E_IllegalMove(
+			p_OldTower, 
+			p_NewTower, 
+			m_StackList[p_OldTower - 1].top().GetDiskNumber(), 
+			m_StackList[p_NewTower - 1].top().GetDiskNumber());
+
+	
+	m_StackList[p_OldTower - 1].pop();
+	m_StackList[p_NewTower - 1].push(newTopDisk);
 }
 
 TOHState TowerOfHanoi::GetState() const
@@ -24,23 +37,33 @@ TOHState TowerOfHanoi::GetState() const
 
 void TowerOfHanoi::Run()
 {
-	if (m_CurrentState == TOHState::Introduction)
-	{
-
-	}
-
 	while (m_CurrentState == TOHState::InProgress)
 	{
+		
+	}
 
+	switch (m_CurrentState)
+	{
+	case TOHState::Introduction:
+
+		break;
+	case TOHState::Lost:
+
+		break;
+	case TOHState::Won:
+
+		break;
 	}
 }
 
 void TowerOfHanoi::Restart()
 {
+	m_StackList.clear();
 }
 
 void TowerOfHanoi::Clean()
 {
+	m_StackList.clear();
 }
 
 void TowerOfHanoi::HandleInput(char p_Input)
