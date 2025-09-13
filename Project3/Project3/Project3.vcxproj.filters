@@ -15,57 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
+    <ClInclude Include="src\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SubApp.h">
+    <ClInclude Include="src\Disk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UserStats.h">
+    <ClInclude Include="src\ExceptionInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="src\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TicTacToe.h">
+    <ClInclude Include="src\SubApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TowerOfHanoi.h">
+    <ClInclude Include="src\TicTacToe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Disk.h">
+    <ClInclude Include="src\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ExceptionInterface.h">
+    <ClInclude Include="src\TowerOfHanoi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="src\UserStats.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
+    <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SubApp.cpp">
+    <ClCompile Include="src\Disk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UserStats.cpp">
+    <ClCompile Include="src\ExceptionInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="src\SubApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TicTacToe.cpp">
+    <ClCompile Include="src\TicTacToe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TowerOfHanoi.cpp">
+    <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Disk.cpp">
+    <ClCompile Include="src\TowerOfHanoi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ExceptionInterface.cpp">
+    <ClCompile Include="src\UserStats.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

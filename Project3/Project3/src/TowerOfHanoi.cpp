@@ -1,4 +1,5 @@
 #include "TowerOfHanoi.h"
+#include <sstream>
 
 TowerOfHanoi::TowerOfHanoi(size_t p_NumOfTowers)
 {
@@ -16,4 +17,16 @@ TOHState TowerOfHanoi::GetState() const
 void TowerOfHanoi::UpdateState()
 {
 	//TODO: 
+}
+
+std::string TowerOfHanoi::E_IllegalMove::GetExceptionName() const
+{
+	return "Illegal Move";
+}
+
+std::string TowerOfHanoi::E_IllegalMove::GetExceptionMessage() const
+{
+	std::stringstream ss;
+	ss << "Moving " << m_InitialTower <<
+	return "";
 }

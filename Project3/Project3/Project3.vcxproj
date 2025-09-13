@@ -123,25 +123,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Disk.h" />
-    <ClInclude Include="ExceptionInterface.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="TicTacToe.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="TowerOfHanoi.h" />
-    <ClInclude Include="UserStats.h" />
-    <ClInclude Include="SubApp.h" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Disk.h" />
+    <ClInclude Include="src\ExceptionInterface.h" />
+    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\SubApp.h" />
+    <ClInclude Include="src\TicTacToe.h" />
+    <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\TowerOfHanoi.h" />
+    <ClInclude Include="src\UserStats.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Disk.cpp" />
-    <ClCompile Include="ExceptionInterface.cpp" />
-    <ClCompile Include="TicTacToe.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TowerOfHanoi.cpp" />
-    <ClCompile Include="UserStats.cpp" />
-    <ClCompile Include="SubApp.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Disk.cpp" />
+    <ClCompile Include="src\ExceptionInterface.cpp" />
+    <ClCompile Include="src\SubApp.cpp" />
+    <ClCompile Include="src\TicTacToe.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\TowerOfHanoi.cpp" />
+    <ClCompile Include="src\UserStats.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

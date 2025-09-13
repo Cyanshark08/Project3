@@ -1,6 +1,8 @@
 #pragma once
 #include <stack>
 #include <vector>
+#include <string>
+#include "ExceptionInterface.h"
 #include "Disk.h"
 
 enum class TOHState
@@ -18,12 +20,17 @@ public:
 	TOHState GetState() const;
 
 public:
-	class E_IllegalMove
+	class E_IllegalMove : public ExceptionInterface
 	{
 	public:
-
+		E_IllegalMove();
 
 	private:
+		std::string GetExceptionName() const override;
+		std::string GetExceptionMessage() const override;
+
+	private:
+		size_t m_InitialTower, m_FinalTower;
 
 	};
 
