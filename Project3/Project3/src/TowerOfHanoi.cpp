@@ -5,12 +5,12 @@
 
 TowerOfHanoi::TowerOfHanoi()
 	: SubApp(AppID::TowerOfHanoi),
-	m_CurrentState(TOHState::Undecided)
+	m_CurrentState(TOHState::Introduction)
 {}
 
 TowerOfHanoi::TowerOfHanoi(size_t p_NumOfTowers)
 	: SubApp(AppID::TowerOfHanoi),
-	m_CurrentState(TOHState::Undecided)
+	m_CurrentState(TOHState::Introduction)
 {}
 
 void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
@@ -24,7 +24,12 @@ TOHState TowerOfHanoi::GetState() const
 
 void TowerOfHanoi::Run()
 {
-	while (m_CurrentState == TOHState::Undecided)
+	if (m_CurrentState == TOHState::Introduction)
+	{
+
+	}
+
+	while (m_CurrentState == TOHState::InProgress)
 	{
 
 	}
@@ -50,15 +55,15 @@ void TowerOfHanoi::InitializeDisks(size_t p_NumOfTowers)
 	m_StackList.clear();
 	m_StackList.resize(p_NumOfTowers);
 	for (size_t i = 0; i < p_NumOfTowers; i++)
-	{
-		m_StackList[0].emplace();
-		std::reverse(m_StackList[0]._Get_container().begin(), m_StackList[0]._Get_container().end());
-	}
+		m_StackList[0].emplace(p_NumOfTowers - i);
 }
 
 void TowerOfHanoi::UpdateState()
 {
-	if()
+	size_t numOfTowers = m_StackList.size();
+
+	if (m_StackList[numOfTowers - 1].size() == numOfTowers)
+		m_CurrentState = TOHState::Won;
 }
 
 TowerOfHanoi::E_IllegalMove::E_IllegalMove(size_t p_InitialTower, size_t p_FinalTower, size_t p_InitialTowerDisk, size_t p_FinalTowerDisk)

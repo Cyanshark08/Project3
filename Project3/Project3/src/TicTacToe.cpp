@@ -8,6 +8,10 @@ void TicTacToe::Run()
 {
 }
 
+void TicTacToe::Restart()
+{
+}
+
 void TicTacToe::Clean()
 {
 }

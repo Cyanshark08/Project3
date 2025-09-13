@@ -4,18 +4,13 @@
 class Disk
 {
 public:
-	Disk();
+	Disk(size_t p_DiskNum);
 
 	size_t GetDiskNumber() const;
-
-	~Disk();
 
 
 private:
 	size_t m_DiskNum;
-
-private:
-	static size_t s_DiskCount;
 
 };
 

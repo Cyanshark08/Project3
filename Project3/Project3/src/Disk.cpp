@@ -1,17 +1,10 @@
 #include "Disk.h"
 
-size_t Disk::s_DiskCount = 0;
-
-Disk::Disk()
-    : m_DiskNum(++s_DiskCount)
+Disk::Disk(size_t p_DiskNum)
+    : m_DiskNum(p_DiskNum)
 {}
 
 size_t Disk::GetDiskNumber() const
 {
     return m_DiskNum;
-}
-
-Disk::~Disk()
-{
-    --s_DiskCount;
 }

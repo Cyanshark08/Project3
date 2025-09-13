@@ -8,7 +8,8 @@
 
 enum class TOHState
 {
-	Undecided,
+	Introduction,
+	InProgress,
 	Lost,
 	Won
 };
