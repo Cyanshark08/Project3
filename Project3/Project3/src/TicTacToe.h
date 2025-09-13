@@ -1,7 +1,6 @@
 #pragma once
 #include "SubApp.h"
 #include <vector>
-#include <bitset>
 
 class TicTacToe : public SubApp
 {

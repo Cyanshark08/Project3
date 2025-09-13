@@ -4,6 +4,6 @@
 std::string ExceptionInterface::Message() const
 {
 	std::stringstream ss;
-	ss << "\n\tEXCEPTION ERROR: " << GetExceptionMessage() << "\n\n\t";
+	ss << "\n\tEXCEPTION ERROR (" << GetExceptionName() << ") : " << GetExceptionMessage() << "\n\n\t";
 	return ss.str();
 }
