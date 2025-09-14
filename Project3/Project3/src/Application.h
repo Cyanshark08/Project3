@@ -22,8 +22,14 @@ public:
 	void Clean();
 
 private:
+	void DisplayMainMenu();
+	MainAppState QueryState();
+
+private:
 	MainAppState m_State;
-	TowerOfHanoi m_TOH;
+	AppID m_CurrentSubApp;
+	TowerOfHanoi m_TowerOfHanoi;
+	TicTacToe m_TicTacToe;
 
 };
 
