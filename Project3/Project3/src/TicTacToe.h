@@ -1,6 +1,8 @@
 #pragma once
 #include "SubApp.h"
 #include "ExceptionInterface.h"
+#include "Input.h"
+
 #include <iostream>
 #include <vector>
 
@@ -14,9 +16,18 @@ public:
 	void Restart() override;
 	void Clean() override;
 
+private:
 	void setPlayerMove(size_t row, size_t column);
 	void setComputerMove();
+
+	int checkWinner() const;
+	bool isMovesLeft() const;
+	int miniMax(int depth, bool isMax);
+
+	int getGames() const;
 	void displayBoard() const;
+
+	void displayInfo() const;
 
 // exception errors
 public:
@@ -64,6 +75,7 @@ public:
 
 private:
 	size_t size;
+	size_t games;
 	std::vector<std::vector<int32_t>> m_Board;
 };
 
