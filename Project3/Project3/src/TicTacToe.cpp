@@ -4,14 +4,14 @@
 TicTacToe::TicTacToe()
 	: SubApp(AppID::TicTacToe),
 	size(3), // default 3x3 board
-	m_Board(size, std::vector<int>(size, 0))
+	m_Board(size, std::vector<int32_t>(size, 0))
 {	
 }
 
 TicTacToe::TicTacToe(size_t newSize)
 	: SubApp(AppID::TicTacToe),
 	size(newSize),
-	m_Board(newSize, std::vector<int>(newSize, 0))
+	m_Board(newSize, std::vector<int32_t>(newSize, 0))
 {
 }
 
@@ -23,9 +23,9 @@ void TicTacToe::Run()
 void TicTacToe::Restart()
 {
 	// reset the board
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
-		for (int j = 0; j < size; j++)
+		for (size_t j = 0; j < size; j++)
 		{
 			m_Board[i][j] = 0;
 		}
@@ -60,7 +60,7 @@ void TicTacToe::displayBoard() const
 {
 	// top border
 	std::cout << std::string(1, 218);
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		std::cout << std::string(3, 196);
 		if (i != size - 1)
@@ -70,9 +70,9 @@ void TicTacToe::displayBoard() const
 	}
 
 	// middle squares
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
-		for (int j = 0; j < size; j++)
+		for (size_t j = 0; j < size; j++)
 		{
 			std::cout << std::string(1, 179);
 
@@ -91,7 +91,7 @@ void TicTacToe::displayBoard() const
 		if (i != size - 1)
 		{
 			std::cout << std::string(1, 195);
-			for (int j = 0; j < size; j++)
+			for (size_t j = 0; j < size; j++)
 			{
 				std::cout << std::string(3, 196);
 				if (j != size - 1)
@@ -106,7 +106,7 @@ void TicTacToe::displayBoard() const
 		else
 		{
 			std::cout << std::string(1, 192);
-			for (int j = 0; j < size; j++)
+			for (size_t j = 0; j < size; j++)
 			{
 				std::cout << std::string(3, 196);
 				if (j != size - 1)
