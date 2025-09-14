@@ -17,6 +17,8 @@ public:
 	SubApp(AppID p_AppID);
 
 	/*
+	* The Run() method is the main method that loops the SubApp over and over until the user exits the SubApp
+	* 
 	* Precondition: None
 	*
 	* Postcondition: Resets all specific variables relating to the implementation class to their default
