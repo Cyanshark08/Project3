@@ -40,11 +40,11 @@ void TicTacToe::Run()
 	std::cout << "\n";
 	do
 	{
+		int moves = 0;
 		std::cout << "\n\tGame begin.\n\n";
 		displayBoard();
 		do
 		{
-			int moves = 0;
 			// start the timer
 			BeginTimer();
 			std::cout << "\n\tHUMAN Moves:";
@@ -115,12 +115,15 @@ void TicTacToe::Run()
 				std::cout << "\n\tCOMPUTER has won.";
 				break;
 			}
-			EndTimer(moves);
 		} while (true);
+		// end the timer
+		EndTimer(moves);
+
 		// ask if the user wants to play again
 		char again = Input::inputChar("\n\tPlay again? (Y-yes or N-no): ", 'Y', 'N');
 		if (again == 'Y')
 			Restart();
+
 		else
 		{
 			// display game statistics
