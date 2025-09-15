@@ -70,7 +70,7 @@ void TicTacToe::Run()
 			// check if there are moves left
 			if (isMovesLeft() && m_Board[row - 1][column - 1] == 0)
 			{
-				setPlayerMove(row, column);
+				setPlayerMove(row - 1, column - 1);
 				std::cout << "\n";
 				displayBoard();
 			}
@@ -128,6 +128,7 @@ void TicTacToe::Run()
 			// display game statistics
 			std::cout << "\n\tGame statistics: ";
 			std::cout << "\n\t\t" << getGames() << " game(s) of Tic-Tac-Toe were played.\n\n";
+
 			Clean();
 			std::system("pause");
 			break;
@@ -156,9 +157,9 @@ void TicTacToe::Clean()
 	m_Board.clear();
 }
 
-void TicTacToe::setPlayerMove(size_t row, size_t column)
+void TicTacToe::setPlayerMove(size_t i, size_t j)
 {
-	m_Board[row - 1][column - 1] = 1;
+	m_Board[i][j] = 1;
 }
 
 void TicTacToe::setComputerMove()
