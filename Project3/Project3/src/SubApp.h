@@ -40,6 +40,8 @@ public:
 	* Postcondition: Free memory related to SubApp entity
 	*/
 	virtual void Clean() = 0;
+
+	void CleanStats();
 	
 	AppID GetAppID() const;
 	
@@ -47,7 +49,7 @@ public:
 
 	void BeginTimer();
 
-	float GetDuration() const;
+	void EndTimer(size_t p_NumberOfMoves);
 
 private:
 	/*

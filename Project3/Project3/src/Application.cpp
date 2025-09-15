@@ -25,9 +25,11 @@ void Application::Run()
 			{
 			case AppID::TicTacToe:
 				m_TicTacToe.Run();
+				m_TicTacToe.CleanStats();
 				break;
 			case AppID::TowerOfHanoi:
 				m_TowerOfHanoi.Run();
+				m_TowerOfHanoi.CleanStats();
 				break;
 			case AppID::NQueens:
 				m_NQueens.Run();
@@ -35,6 +37,7 @@ void Application::Run()
 			}
 
 			m_State = MainAppState::MainApp;
+			m_CurrentSubApp = AppID::InvalidApp;
 			break;
 		}
 	}

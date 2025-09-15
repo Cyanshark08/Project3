@@ -12,6 +12,10 @@ public:
 
 	bool operator>(Disk& p_Other) const;
 
+	operator size_t() const;
+
+	~Disk();
+
 public:
 	class E_DuplicateDiskNumber : public ExceptionInterface
 	{

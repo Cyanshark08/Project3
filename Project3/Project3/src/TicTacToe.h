@@ -66,12 +66,6 @@ private:
 
 	/*
 	* PreCondition: N/A
-	* PostCondition: Increment the number of games played
-	*/
-	void addGame();
-
-	/*
-	* PreCondition: N/A
 	* PostCondition: check if there is a winner on the board. Return the number corresponding to the winner
 	* 
 	* @return The number corresponding to the winner (0-none, 1-player, 2-computer)
@@ -92,18 +86,17 @@ private:
 	* 
 	* @param The amount of moves into the game (depth), whose turn is currently being played (isMax), the highest score 
 	* by the computer (alpha), and the highest score by the human (beta)
-	* @return The highest score the computer has found 
+	* @return The highest score corresponding to the best move
 	*/
 	int miniMax(int depth, bool isMax, int alpha, int beta);
-	int evaluateBoard() const;
 
 	/*
 	* PreCondition: N/A
-	* PostCondition: Return the number of games played
+	* PostCondition: Return the score of the current state of the board
 	* 
-	* @return The number of played games
+	* @return The score used to determine the best move
 	*/
-	int getGames() const;
+	int evaluateBoard() const;
 
 	/*
 	* PreCondition: N/A
@@ -121,7 +114,6 @@ private:
 
 private:
 	size_t size;
-	size_t games;
 	std::vector<std::vector<int32_t>> m_Board;
 };
 

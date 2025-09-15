@@ -10,7 +10,7 @@ enum class TOHState
 {
 	Introduction,
 	InProgress,
-	Lost,
+	Exited,
 	Won
 };
 
@@ -19,6 +19,7 @@ class TowerOfHanoi : public SubApp
 public:
 	TowerOfHanoi();
 	void MoveDisk(size_t p_OldTower, size_t p_NewTower);
+	void SetNumberOfDisks(size_t p_NumOfDisks);
 	TOHState GetState() const;
 
 	void DisplayGame() const;
@@ -43,6 +44,19 @@ public:
 
 	};
 
+	class E_EmptyStack : public ExceptionInterface
+	{
+	public:
+		E_EmptyStack(size_t p_StackNum);
+
+	private:
+		std::string GetExceptionName() const override;
+		std::string GetExceptionMessage() const override;
+
+	private:
+		size_t m_StackNum;
+	};
+
 private:
 	void InitializeDisks();
 	void UpdateState();
@@ -56,6 +70,7 @@ private:
 	std::array<std::stack<Disk>, 3> m_StackList;
 	TOHState m_CurrentState;
 	size_t m_MoveCount;
+	size_t m_NumberOfDisks;
 
 };
 

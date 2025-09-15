@@ -1,48 +1,64 @@
 #include "UserStats.h"
-
-UserStats::UserStats()
-    : m_FastestTime(0.0f),
-    m_LongestTime(0.0f),
-    m_TotalTime(0.0f),
-    m_GamesPlayed(0)
-{}
-
-void UserStats::UpdateStats(float newTime)
-{
-    if (m_GamesPlayed == 0 || newTime < m_FastestTime)
-        m_FastestTime = newTime;
-
-    if (newTime > m_LongestTime)
-        m_LongestTime = newTime;
-
-    m_TotalTime += newTime;
-    m_GamesPlayed++;
-}
-
-void UserStats::Reset()
-{
-    m_FastestTime = 0.0f;
-    m_LongestTime = 0.0f;
-    m_TotalTime = 0.0f;
-    m_GamesPlayed = 0;
-}
-
-float UserStats::GetFastestTime() const
-{
-    return m_FastestTime;
-}
+#include <algorithm>
 
 float UserStats::GetLongestTime() const
 {
-    return m_LongestTime;
+    return m_Times[m_Times.size() - 1];
+}
+
+float UserStats::GetShortestTime() const
+{
+    return m_Times[0];
 }
 
 float UserStats::GetAverageTime() const
 {
-    return m_GamesPlayed > 0 ? m_TotalTime / m_GamesPlayed : 0.0f;
+    float sum = 0.f;
+    for (float time : m_Times)
+        sum += time;
+
+    return sum / (float) m_Times.size();
 }
 
-int UserStats::GetGamesPlayed() const
+size_t UserStats::GetLongestMoves() const
 {
-    return m_GamesPlayed;
+    return m_LongestMoves;
+}
+
+size_t UserStats::GetShortestMoves() const
+{
+    return m_ShortestMoves;
+}
+
+size_t UserStats::GetNumOfGamesPlayed() const
+{
+    return m_Times.size();
+}
+
+void UserStats::AddTime(float p_Duration, size_t p_NumberOfMoves)
+{
+    if(m_Times.size() != 0)
+    {
+        std::sort(m_Times.begin(), m_Times.end());
+
+        if (p_Duration < m_Times[0])
+            m_ShortestMoves = p_NumberOfMoves;
+
+        if (p_Duration > m_Times[m_Times.size() - 1])
+            m_LongestMoves = p_NumberOfMoves;
+    }
+    else
+    {
+        m_ShortestMoves = p_NumberOfMoves;
+        m_LongestMoves = p_NumberOfMoves;
+    }
+
+    m_Times.push_back(p_Duration);
+}
+
+void UserStats::Clean()
+{
+    m_LongestMoves = 0;
+    m_ShortestMoves = 0;
+    m_Times.clear();
 }
