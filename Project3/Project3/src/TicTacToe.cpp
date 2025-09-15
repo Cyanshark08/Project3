@@ -30,16 +30,111 @@ TicTacToe::TicTacToe(size_t newSize)
 
 void TicTacToe::Run()
 {
+	std::system("cls");
+
+	// display tic tac toe information
 	displayInfo();
+	std::cout << "\n";
+
+	// initialize the board size
+	size_t newSize = Input::inputInteger("\n\tEnter the size of the board (larger size = longer computer time): ", true);
+	setSize(newSize);
+	m_Board.assign(size, std::vector<int>(size, 0));
+
 	std::cout << "\n";
 	do
 	{
-		std::cout << "\n\t\tGame begin.\n\n";
+		addGame();
+		std::cout << "\n\tGame begin.\n\n";
 		displayBoard();
+		do
+		{
 
+			std::cout << "\n\tHUMAN Moves:";
 
+			// ask for the player's move
+			int bound = size;
+			int row = Input::inputInteger("\n\t\tEnter the board's row (1.." + std::to_string(size) + ") or 0 to forfeit: ", 0, bound);
+			if (row == 0)
+			{
+				std::cout << "\n\tYou forfeited the game. Therefore, Dumb AI has won.";
+				break;
+			}
+			int column = Input::inputInteger("\t\tEnter the board's column (1.." + std::to_string(size) + ") or 0 to forfeit: ", 0, bound);
+			if (column == 0)
+			{
+				std::cout << "\n\tYou forfeited the game. Therefore, Computer has won.";
+				break;
+			}
 
+			// check if there are moves left
+			if (isMovesLeft() && m_Board[row - 1][column - 1] == 0)
+			{
+				setPlayerMove(row, column);
+				std::cout << "\n";
+				displayBoard();
+			}
+
+			// tie if no moves left and no winner
+			else if (!isMovesLeft() && checkWinner() == 0)
+			{
+				std::cout << "\n\tTie.";
+				break;
+			}
+			// player inputted an area already taken
+			else
+			{
+				std::cout << "\n\tERROR: Illegal Move. Square is already taken. Please re-enter move.\n";
+				continue;
+			}
+
+			// check if the player has won
+			if (checkWinner() == 1)
+			{
+				std::cout << "\n\tHUMAN has won.";
+				break;
+			}
+
+			// check if there are moves left
+			if (isMovesLeft())
+			{
+				std::cout << "\n\tCOMPUTER Moves:";
+				setComputerMove();
+				std::cout << "\n";
+				displayBoard();
+			}
+
+			// tie if no moves left and no winner
+			else if (!isMovesLeft() && checkWinner() == 0)
+			{
+				std::cout << "\n\tTie.";
+				break;
+			}
+
+			// check if the computer has won
+			if (checkWinner() == 2)
+			{
+				std::cout << "\n\tCOMPUTER has won.";
+				break;
+			}
+		} while (true);
+
+		// ask if the user wants to play again
+		char again = Input::inputChar("\n\tPlay again? (Y-yes or N-no): ", 'Y', 'N');
+		if (again == 'Y')
+			Restart();
+		else
+		{
+			// display game statistics
+			std::cout << "\n\tGame statistics: ";
+			std::cout << "\n\t\t" << getGames() << " game(s) of Tic-Tac-Toe were played.\n\n";
+			Clean();
+			std::system("pause");
+			break;
+		}
+		std::cout << "\n";
 	} while (true);
+	std::system("cls");
 }
 
 void TicTacToe::Restart()
@@ -57,50 +152,59 @@ void TicTacToe::Restart()
 void TicTacToe::Clean()
 {
 	size = 0;
+	games = 0;
 	m_Board.clear();
 }
 
 void TicTacToe::setPlayerMove(size_t row, size_t column)
 {
-	// throw exception errors if invalid row/ column/ move
-	if (row - 1 >= size)
-		throw E_RowOutOfBounds(row);
-	if (column - 1 >= size)
-		throw E_ColumnOutOfBounds(column);
-	if (m_Board[row - 1][column - 1] != 0)
-		throw E_InvalidMove(row, column);
-
 	m_Board[row - 1][column - 1] = 1;
 }
 
 void TicTacToe::setComputerMove()
 {
-	int bestVal = -1000;
-	size_t bestRow = -1, bestCol = -1;
+	int bestScore = -1000;
+	int bestRow = -1, bestCol = -1;
 
 	for (size_t i = 0; i < size; i++)
 	{
 		for (size_t j = 0; j < size; j++)
 		{
-			if (m_Board[i][j] == 0)
+			if (m_Board[i][j] == 0) // empty
 			{
-				m_Board[i][j] = 2; // computer move
-				int moveVal = miniMax(0, false); // evaluate move
-				m_Board[i][j] = 0; // undo
+				// try move
+				m_Board[i][j] = 2;
+				int moveScore = miniMax(0, false, -1000, 1000);
 
-				if (moveVal > bestVal)
+				// undo move
+				m_Board[i][j] = 0;
+
+				// pick best move
+				if (moveScore > bestScore)
 				{
+					bestScore = moveScore;
 					bestRow = i;
 					bestCol = j;
-					bestVal = moveVal;
 				}
 			}
 		}
 	}
 
+	// Make the best move
 	if (bestRow != -1 && bestCol != -1)
 		m_Board[bestRow][bestCol] = 2;
 }
+
+void TicTacToe::setSize(size_t newSize)
+{
+	size = newSize;
+}
+
+void TicTacToe::addGame()
+{
+	games += 1;
+}
+
 
 int TicTacToe::checkWinner() const
 {
@@ -212,54 +316,131 @@ bool TicTacToe::isMovesLeft() const
 	return false;
 }
 
-int TicTacToe::miniMax(int depth, bool isMax)
+int TicTacToe::miniMax(int depth, bool isMax, int alpha, int beta)
 {
 	int winner = checkWinner();
-	if (winner == 2) 
-		return 10 - depth;   // computer wins
-	if (winner == 1) 
-		return depth - 10;   // player wins
-	if (!isMovesLeft()) 
-		return 0;         // tie
+	if (winner == 2) return 100 - depth;
+	if (winner == 1) return depth - 100;
+	if (!isMovesLeft()) return 0;
 
-	if (isMax) // computer's move
+	if (depth >= 5)
+		return evaluateBoard();
+
+	// computer move
+	if (isMax) 
 	{
 		int best = -1000;
-		for (size_t i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++) 
 		{
-			for (size_t j = 0; j < size; j++)
+			for (size_t j = 0; j < size; j++) 
 			{
-				// find the best move to make
-				if (m_Board[i][j] == 0)
+				if (m_Board[i][j] == 0) 
 				{
 					m_Board[i][j] = 2;
-					best = std::max(best, miniMax(depth + 1, false));
-					m_Board[i][j] = 0; // undo the move
+					best = std::max(best, miniMax(depth + 1, false, alpha, beta));
+					m_Board[i][j] = 0;
+					alpha = std::max(alpha, best);
+					if (beta <= alpha) 
+						return best;
 				}
 			}
 		}
 		return best;
 	}
 
-	else // player's move
+	// computer move
+	else
 	{
 		int best = 1000;
-		for (size_t i = 0; i < size; i++)
+		for (size_t i = 0; i < size; i++) 
 		{
-			for (size_t j = 0; j < size; j++)
+			for (size_t j = 0; j < size; j++) 
 			{
-				// find the best move the player can make
-				if (m_Board[i][j] == 0)
+				if (m_Board[i][j] == 0) 
 				{
 					m_Board[i][j] = 1;
-					best = std::min(best, miniMax(depth + 1, true));
-					m_Board[i][j] = 0; // undo the move
+					best = std::min(best, miniMax(depth + 1, true, alpha, beta));
+					m_Board[i][j] = 0;
+					beta = std::min(beta, best);
+					if (beta <= alpha) 
+						return best;
 				}
 			}
 		}
 		return best;
 	}
 }
+
+int TicTacToe::evaluateBoard() const
+{
+	int winner = checkWinner();
+	if (winner == 2) 
+		return 100;
+	if (winner == 1) 
+		return -100;
+
+	int score = 0;
+
+	// Check rows
+	for (size_t i = 0; i < size; i++) 
+	{
+		int playerCount = 0, compCount = 0;
+		for (size_t j = 0; j < size; j++) 
+		{
+			if (m_Board[i][j] == 1) 
+				playerCount++;
+			else if (m_Board[i][j] == 2) 
+				compCount++;
+		}
+		if (playerCount == 0 && compCount > 0) 
+			score += compCount * compCount;
+		if (compCount == 0 && playerCount > 0) 
+			score -= playerCount * playerCount;
+	}
+
+	// Check columns
+	for (size_t j = 0; j < size; j++) 
+	{
+		int playerCount = 0, compCount = 0;
+		for (size_t i = 0; i < size; i++)
+		{
+			if (m_Board[i][j] == 1) playerCount++;
+			else if (m_Board[i][j] == 2) compCount++;
+		}
+		if (playerCount == 0 && compCount > 0) 
+			score += compCount * compCount;
+		if (compCount == 0 && playerCount > 0) 
+			score -= playerCount * playerCount;
+	}
+
+	// Check diagonals
+	int playerCount = 0, compCount = 0;
+	for (size_t i = 0; i < size; i++) 
+	{
+		if (m_Board[i][i] == 1) playerCount++;
+		else if (m_Board[i][i] == 2) compCount++;
+	}
+	if (playerCount == 0 && compCount > 0) 
+		score += compCount * compCount;
+	if (compCount == 0 && playerCount > 0) 
+		score -= playerCount * playerCount;
+
+	playerCount = compCount = 0;
+	for (size_t i = 0; i < size; i++) 
+	{
+		if (m_Board[i][size - i - 1] == 1)
+			playerCount++;
+		else if (m_Board[i][size - i - 1] == 2) 
+			compCount++;
+	}
+	if (playerCount == 0 && compCount > 0) 
+		score += compCount * compCount;
+	if (compCount == 0 && playerCount > 0) 
+		score -= playerCount * playerCount;
+
+	return score;
+}
+
 
 int TicTacToe::getGames() const
 {
@@ -285,7 +466,7 @@ void TicTacToe::displayBoard() const
 		std::cout << "\t\t";
 		for (size_t j = 0; j < size; j++)
 		{
-			std::cout << "\t" << std::string(1, 179);
+			std::cout << std::string(1, 179);
 
 			// print x or spaces
 			if (m_Board[i][j] == 0) // square is empty
@@ -344,56 +525,5 @@ void TicTacToe::displayInfo() const
 
 void TicTacToe::HandleInput(char p_Input)
 {
+
 }
-
-// E_RowOutOfBounds
-TicTacToe::E_RowOutOfBounds::E_RowOutOfBounds(size_t row)
-{
-	m_Row = row;
-}
-
-inline std::string TicTacToe::E_RowOutOfBounds::GetExceptionName() const
-{
-	return "Row out of bounds";
-}
-
-inline std::string TicTacToe::E_RowOutOfBounds::GetExceptionMessage() const
-{
-	return "Row [" + std::to_string(m_Row) + "] out of bounds.";
-}
-
-
-// E_ColumnOutOfBounds
-TicTacToe::E_ColumnOutOfBounds::E_ColumnOutOfBounds(size_t column)
-{
-	m_Column = column;
-}
-
-inline std::string TicTacToe::E_ColumnOutOfBounds::GetExceptionName() const
-{
-	return "Column out of bounds";
-}
-
-inline std::string TicTacToe::E_ColumnOutOfBounds::GetExceptionMessage() const
-{
-	return "Column [" + std::to_string(m_Column) + "] out of bounds.";
-}
-
-// E_InvalidMove
-TicTacToe::E_InvalidMove::E_InvalidMove(size_t row, size_t column)
-{
-	m_Row = row;
-	m_Column = column;
-}
-
-inline std::string TicTacToe::E_InvalidMove::GetExceptionName() const
-{
-	return "Invalid move. Square has already been taken";
-}
-
-inline std::string TicTacToe::E_InvalidMove::GetExceptionMessage() const
-{
-	return "Area [" + std::to_string(m_Row) + "][" + std::to_string(m_Column) + "] has already been taken.";
-}
-
-

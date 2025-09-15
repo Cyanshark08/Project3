@@ -1,6 +1,5 @@
 #pragma once
 #include "SubApp.h"
-#include "ExceptionInterface.h"
 
 #include <iostream>
 #include <vector>
@@ -18,61 +17,19 @@ public:
 private:
 	void setPlayerMove(size_t row, size_t column);
 	void setComputerMove();
+	void setSize(size_t newSize);
+	void addGame();
 
 	int checkWinner() const;
 	bool isMovesLeft() const;
-	int miniMax(int depth, bool isMax);
+	int miniMax(int depth, bool isMax, int alpha, int beta);
+	int evaluateBoard() const;
 
 	int getGames() const;
 	void displayBoard() const;
-
 	void displayInfo() const;
 
 	void HandleInput(char p_Input) override;
-
-// exception errors
-public:
-	class E_RowOutOfBounds : public ExceptionInterface
-	{
-	public:
-		E_RowOutOfBounds(size_t row);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Row;
-
-	};
-
-	class E_ColumnOutOfBounds : public ExceptionInterface
-	{
-	public:
-		E_ColumnOutOfBounds(size_t column);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Column;
-	};
-
-	class E_InvalidMove : public ExceptionInterface
-	{
-	public: 
-		E_InvalidMove(size_t row, size_t column);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Row;
-		size_t m_Column;
-
-	};
 
 private:
 	size_t size;
