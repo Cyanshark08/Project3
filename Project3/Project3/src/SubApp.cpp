@@ -27,7 +27,7 @@ void SubApp::BeginTimer()
 	m_AppTimer.Reset();
 }
 
-float SubApp::GetDuration() const
+void SubApp::EndTimer(size_t p_NumberOfMoves)
 {
-	return m_AppTimer.GetElapsedTime();
+	m_UserStatistics.AddTime(m_AppTimer.GetElapsedTime(), p_NumberOfMoves);
 }

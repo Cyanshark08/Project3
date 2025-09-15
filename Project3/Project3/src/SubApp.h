@@ -47,7 +47,7 @@ public:
 
 	void BeginTimer();
 
-	float GetDuration() const;
+	void EndTimer(size_t p_NumberOfMoves);
 
 private:
 	/*

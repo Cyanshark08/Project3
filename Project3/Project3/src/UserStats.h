@@ -1,14 +1,24 @@
 #pragma once
+#include <vector>
 
 class UserStats
 {
 public:
+	float GetLongestTime() const;
+	float GetShortestTime() const;
+	float GetAverageTime() const;
 
+	size_t GetLongestMoves() const;
+	size_t GetShortestMoves() const;
+
+	void AddTime(float p_Duration, size_t p_NumberOfMoves);
 
 private:
-	float m_FastestTime;
-	float m_LongestTime;
-	float m_CurrentTime;
+
+	std::vector<float> m_Times;
+
+	size_t m_ShortestMoves;
+	size_t m_LongestMoves;
 
 };
 

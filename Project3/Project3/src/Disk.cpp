@@ -25,6 +25,16 @@ bool Disk::operator>(Disk& p_Other) const
     return this->m_DiskNum > p_Other.m_DiskNum;
 }
 
+Disk::operator size_t() const
+{
+    return m_DiskNum;
+}
+
+Disk::~Disk()
+{
+    s_TakenDiskNums.erase(m_DiskNum);
+}
+
 Disk::E_DuplicateDiskNumber::E_DuplicateDiskNumber(size_t p_DuplicatedDiskNum)
     : m_DuplicatedDiskNum(p_DuplicatedDiskNum)
 {}

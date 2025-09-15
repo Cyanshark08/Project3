@@ -33,6 +33,7 @@ void Application::Run()
 			}
 
 			m_State = MainAppState::MainApp;
+			m_CurrentSubApp = AppID::InvalidApp;
 			break;
 		}
 	}
