@@ -1,6 +1,5 @@
 #pragma once
 #include "SubApp.h"
-#include "ExceptionInterface.h"
 
 #include <iostream>
 #include <vector>
@@ -9,70 +8,116 @@ class TicTacToe : public SubApp
 {
 public:
 
+	/*
+	* PreCondition: N/A
+	* PostCondition: initialize private members and board to default values
+	*/
 	TicTacToe();
-	TicTacToe(size_t size);
+
+	/*
+	* PreCondition: newSize must be a positive integer value
+	* PostCondition: initialize the size to newSize and resize the board
+	* 
+	* @param The size of the board
+	*/
+	TicTacToe(size_t newSize);
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Run the game for the player
+	*/
 	void Run() override;
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Reset the board to its initial state (no squares taken)
+	*/
 	void Restart() override;
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Reset the size, games, and board
+	*/
 	void Clean() override;
 
 private:
-	void setPlayerMove(size_t row, size_t column);
+
+	/*
+	* PreCondition: I and J must be valid indices within the 2D vector
+	* PostCondition: set the specified index of the vector to 1 (player mark)
+	* 
+	* @param The indexes of the area to mark
+	*/
+	void setPlayerMove(size_t i, size_t j);
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: set an index on the board to 2 (computer mark)
+	*/
 	void setComputerMove();
 
-	int checkWinner() const;
-	bool isMovesLeft() const;
-	int miniMax(int depth, bool isMax);
+	/*
+	* PreCondtion: newSize must be a positive integer value
+	* PostCondition: set size to newSize
+	* 
+	* @param The size of the board
+	*/
+	void setSize(size_t newSize);
 
+	/*
+	* PreCondition: N/A
+	* PostCondition: Increment the number of games played
+	*/
+	void addGame();
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: check if there is a winner on the board. Return the number corresponding to the winner
+	* 
+	* @return The number corresponding to the winner (0-none, 1-player, 2-computer)
+	*/
+	int checkWinner() const;
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Return true if there are still empty spots on the board
+	* 
+	* @return A boolean statement regarding the state of the board
+	*/
+	bool isMovesLeft() const;
+
+	/*
+	* PreCondition: Depth, alpha, and beta must be a positive integer value, isMax must be a boolean statement
+	* PostCondition: Return the score of the highest scoring move the computer can make
+	* 
+	* @param The amount of moves into the game (depth), whose turn is currently being played (isMax), the highest score 
+	* by the computer (alpha), and the highest score by the human (beta)
+	* @return The highest score the computer has found 
+	*/
+	int miniMax(int depth, bool isMax, int alpha, int beta);
+	int evaluateBoard() const;
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Return the number of games played
+	* 
+	* @return The number of played games
+	*/
 	int getGames() const;
+
+	/*
+	* PreCondition: N/A
+	* PostCondition: Display the board, substituting the 0, 1, 2, with an empty square, X, or O
+	*/
 	void displayBoard() const;
 
+	/*
+	* PreCondition N/A
+	* PostCondition: Display the TicTacToe informational paragraph
+	*/
 	void displayInfo() const;
 
 	void HandleInput(char p_Input) override;
-
-// exception errors
-public:
-	class E_RowOutOfBounds : public ExceptionInterface
-	{
-	public:
-		E_RowOutOfBounds(size_t row);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Row;
-
-	};
-
-	class E_ColumnOutOfBounds : public ExceptionInterface
-	{
-	public:
-		E_ColumnOutOfBounds(size_t column);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Column;
-	};
-
-	class E_InvalidMove : public ExceptionInterface
-	{
-	public: 
-		E_InvalidMove(size_t row, size_t column);
-
-	private:
-		std::string GetExceptionName() const override;
-		std::string GetExceptionMessage() const override;
-
-	private:
-		size_t m_Row;
-		size_t m_Column;
-
-	};
 
 private:
 	size_t size;
