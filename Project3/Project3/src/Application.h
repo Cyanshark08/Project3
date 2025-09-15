@@ -23,7 +23,7 @@ public:
 
 private:
 	void DisplayMainMenu();
-	MainAppState QueryState();
+	void QueryState();
 
 private:
 	MainAppState m_State;

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Input.h"
 
 Application::Application()
 	: m_State(MainAppState::MainApp),
@@ -15,6 +16,7 @@ void Application::Run()
 		{
 		case MainAppState::MainApp:
 			DisplayMainMenu();
+			QueryState();
 			break;
 		case MainAppState::SubApp:			
 			switch (m_CurrentSubApp)
@@ -44,4 +46,16 @@ void Application::Clean()
 
 void Application::DisplayMainMenu()
 {
+}
+
+void Application::QueryState()
+{
+	char choice = Input::inputChar("\n\tI", "");
+	switch (choice)
+	{
+	case '':
+		m_State = MainAppState::SubApp;
+		m_CurrentSubApp = AppID::NQueens;
+		break;
+	}
 }
