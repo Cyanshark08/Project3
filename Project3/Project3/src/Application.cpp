@@ -7,6 +7,7 @@ Application::Application()
 	m_CurrentSubApp(AppID::InvalidApp),
 	m_TowerOfHanoi(),
 	m_TicTacToe()
+	m_NQueens() 
 {}
 
 void Application::Run()
@@ -29,6 +30,7 @@ void Application::Run()
 				m_TowerOfHanoi.Run();
 				break;
 			case AppID::NQueens:
+				m_NQueens.Run();
 				break;
 			}
 

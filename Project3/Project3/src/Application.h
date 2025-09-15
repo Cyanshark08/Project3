@@ -1,6 +1,7 @@
 #pragma once
 #include "TowerOfHanoi.h"
 #include "TicTacToe.h"
+#include "NQueens.h"
 #include <memory>
 
 enum class MainAppState
@@ -29,6 +30,7 @@ private:
 	AppID m_CurrentSubApp;
 	TowerOfHanoi m_TowerOfHanoi;
 	TicTacToe m_TicTacToe;
+	NQueens m_NQueens;  // Add this member
 
 };
 
