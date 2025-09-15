@@ -6,8 +6,6 @@ TicTacToe::TicTacToe()
 	: SubApp(AppID::TicTacToe)
 {
 	size = 3;
-	games = 0;
-
 	m_Board.resize(size);
 
 	// initialize the board
@@ -19,8 +17,6 @@ TicTacToe::TicTacToe(size_t newSize)
 	: SubApp(AppID::TicTacToe)
 {
 	size = newSize;
-	games = 0;
-
 	m_Board.resize(size);
 
 	// initialize the board
@@ -44,12 +40,13 @@ void TicTacToe::Run()
 	std::cout << "\n";
 	do
 	{
-		addGame();
 		std::cout << "\n\tGame begin.\n\n";
 		displayBoard();
 		do
 		{
-
+			int moves = 0;
+			// start the timer
+			BeginTimer();
 			std::cout << "\n\tHUMAN Moves:";
 
 			// ask for the player's move
@@ -71,6 +68,7 @@ void TicTacToe::Run()
 			if (isMovesLeft() && m_Board[row - 1][column - 1] == 0)
 			{
 				setPlayerMove(row - 1, column - 1);
+				moves++;
 				std::cout << "\n";
 				displayBoard();
 			}
@@ -117,8 +115,8 @@ void TicTacToe::Run()
 				std::cout << "\n\tCOMPUTER has won.";
 				break;
 			}
+			EndTimer(moves);
 		} while (true);
-
 		// ask if the user wants to play again
 		char again = Input::inputChar("\n\tPlay again? (Y-yes or N-no): ", 'Y', 'N');
 		if (again == 'Y')
@@ -127,8 +125,6 @@ void TicTacToe::Run()
 		{
 			// display game statistics
 			std::cout << "\n\tGame statistics: ";
-			std::cout << "\n\t\t" << getGames() << " game(s) of Tic-Tac-Toe were played.\n\n";
-
 			Clean();
 			std::system("pause");
 			break;
@@ -153,7 +149,6 @@ void TicTacToe::Restart()
 void TicTacToe::Clean()
 {
 	size = 0;
-	games = 0;
 	m_Board.clear();
 }
 
@@ -199,11 +194,6 @@ void TicTacToe::setComputerMove()
 void TicTacToe::setSize(size_t newSize)
 {
 	size = newSize;
-}
-
-void TicTacToe::addGame()
-{
-	games += 1;
 }
 
 
@@ -442,11 +432,6 @@ int TicTacToe::evaluateBoard() const
 	return score;
 }
 
-
-int TicTacToe::getGames() const
-{
-	return games;
-}
 
 void TicTacToe::displayBoard() const
 {
