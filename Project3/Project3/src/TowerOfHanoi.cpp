@@ -184,13 +184,17 @@ void TowerOfHanoi::Run()
 			switch (Input::inputChar("Play again? (Y-yes, N-no)", "YN"))
 			{
 			case 'Y':
-				this->Clean();
-				m_CurrentState = TOHState::Introduction;
+				this->Restart();
+				this->BeginTimer();
+				m_CurrentState = TOHState::InProgress;
 				break;
 			case 'N':
-				printf("\n\tThe fastest time was %.2f second(s) in %d moves", this->GetUserStats().GetShortestTime(), this->GetUserStats().GetShortestMoves());
-				printf("\n\tThe slowest time was %.2f second(s) in %d moves", this->GetUserStats().GetLongestTime(), this->GetUserStats().GetLongestMoves());
-				printf("\n\tThe average time was %.2f second(s)", this->GetUserStats().GetAverageTime());
+				printf(this->GetUserStats().GetNumOfGamesPlayed() != 1 ? 
+					  "\n\t%d Games of Tower Of Hanoi with %d disk(s) were played"
+					: "\n\t%d Game of Tower Of Hanoi with %d disk(s) was played", this->GetUserStats().GetNumOfGamesPlayed(), this->m_NumberOfDisks);
+				printf("\n\t\tThe fastest time was %.2f second(s) in %d moves", this->GetUserStats().GetShortestTime(), this->GetUserStats().GetShortestMoves());
+				printf("\n\t\tThe slowest time was %.2f second(s) in %d moves", this->GetUserStats().GetLongestTime(), this->GetUserStats().GetLongestMoves());
+				printf("\n\t\tThe average time was %.2f second(s)", this->GetUserStats().GetAverageTime());
 				puts("\t");
 				std::system("pause");
 				m_CurrentState = TOHState::Exited;
@@ -208,7 +212,15 @@ void TowerOfHanoi::Run()
 
 void TowerOfHanoi::Restart()
 {
-	this->Clean();
+	for (auto& stack : m_StackList)
+	{
+		while (!stack.empty())
+			stack.pop();
+	}
+
+	m_MoveCount = 0;
+
+	InitializeDisks();
 }
 
 void TowerOfHanoi::Clean()

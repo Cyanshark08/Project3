@@ -11,7 +11,11 @@ public:
 	size_t GetLongestMoves() const;
 	size_t GetShortestMoves() const;
 
+	size_t GetNumOfGamesPlayed() const;
+
 	void AddTime(float p_Duration, size_t p_NumberOfMoves);
+
+	void Clean();
 
 private:
 

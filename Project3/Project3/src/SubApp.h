@@ -40,6 +40,8 @@ public:
 	* Postcondition: Free memory related to SubApp entity
 	*/
 	virtual void Clean() = 0;
+
+	void CleanStats();
 	
 	AppID GetAppID() const;
 	

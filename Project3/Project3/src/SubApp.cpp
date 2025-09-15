@@ -12,6 +12,11 @@ SubApp::SubApp(AppID p_AppID)
 	m_AppID(p_AppID)
 {}
 
+void SubApp::CleanStats()
+{
+	m_UserStatistics.Clean();
+}
+
 AppID SubApp::GetAppID() const
 {
 	return m_AppID;

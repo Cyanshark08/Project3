@@ -30,6 +30,11 @@ size_t UserStats::GetShortestMoves() const
     return m_ShortestMoves;
 }
 
+size_t UserStats::GetNumOfGamesPlayed() const
+{
+    return m_Times.size();
+}
+
 void UserStats::AddTime(float p_Duration, size_t p_NumberOfMoves)
 {
     if(m_Times.size() != 0)
@@ -49,4 +54,11 @@ void UserStats::AddTime(float p_Duration, size_t p_NumberOfMoves)
     }
 
     m_Times.push_back(p_Duration);
+}
+
+void UserStats::Clean()
+{
+    m_LongestMoves = 0;
+    m_ShortestMoves = 0;
+    m_Times.clear();
 }
