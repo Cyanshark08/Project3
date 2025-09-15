@@ -21,3 +21,13 @@ UserStats SubApp::GetUserStats() const
 {
 	return m_UserStatistics;
 }
+
+void SubApp::BeginTimer()
+{
+	m_AppTimer.Reset();
+}
+
+float SubApp::GetDuration() const
+{
+	return m_AppTimer.GetElapsedTime();
+}

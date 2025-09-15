@@ -1,4 +1,5 @@
 #include "TicTacToe.h"
+#include "Input.h"
 
 
 TicTacToe::TicTacToe()
@@ -7,14 +8,11 @@ TicTacToe::TicTacToe()
 	size = 3;
 	games = 0;
 
+	m_Board.resize(size);
+
 	// initialize the board
 	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			m_Board[i][j] = 0;
-		}
-	}
+		m_Board[i].resize(size);
 }
 
 TicTacToe::TicTacToe(size_t newSize)
@@ -23,14 +21,11 @@ TicTacToe::TicTacToe(size_t newSize)
 	size = newSize;
 	games = 0;
 
+	m_Board.resize(size);
+
 	// initialize the board
 	for (int i = 0; i < size; i++)
-	{
-		for (int j = 0; j < size; j++)
-		{
-			m_Board[i][j] = 0;
-		}
-	}
+		m_Board[i].resize(size);
 }
 
 void TicTacToe::Run()
@@ -345,6 +340,10 @@ void TicTacToe::displayInfo() const
 	std::cout << "\n\tThis tic-tac-toe program plays against the computer. Human player, X, will always";
 	std::cout << "\n\tfirst. Time will be recorded for the fastest and the slowest game. Average time will";
 	std::cout << "\n\tthen be calculated and displayed.";
+}
+
+void TicTacToe::HandleInput(char p_Input)
+{
 }
 
 // E_RowOutOfBounds

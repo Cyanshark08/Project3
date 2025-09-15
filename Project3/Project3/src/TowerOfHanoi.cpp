@@ -8,11 +8,6 @@ TowerOfHanoi::TowerOfHanoi()
 	m_CurrentState(TOHState::Introduction)
 {}
 
-TowerOfHanoi::TowerOfHanoi(size_t p_NumOfTowers)
-	: SubApp(AppID::TowerOfHanoi),
-	m_CurrentState(TOHState::Introduction)
-{}
-
 void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
 {
 	Disk newTopDisk = m_StackList[p_OldTower - 1].top();
@@ -28,6 +23,8 @@ void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
 	
 	m_StackList[p_OldTower - 1].pop();
 	m_StackList[p_NewTower - 1].push(newTopDisk);
+
+	m_MoveCount++;
 }
 
 TOHState TowerOfHanoi::GetState() const
@@ -35,17 +32,30 @@ TOHState TowerOfHanoi::GetState() const
 	return m_CurrentState;
 }
 
+void TowerOfHanoi::DisplayGame() const
+{
+}
+
 void TowerOfHanoi::Run()
 {
 	while (m_CurrentState == TOHState::InProgress)
 	{
-		
+		DisplayGame();
+		try
+		{
+			MoveDisk(Input::inputInteger("", true), Input::inputInteger("", true));
+		}
+		catch(const ExceptionInterface& e)
+		{
+			puts(e.Message().c_str());
+		}
 	}
 
 	switch (m_CurrentState)
 	{
 	case TOHState::Introduction:
 
+		m_CurrentState = TOHState::InProgress;
 		break;
 	case TOHState::Lost:
 
@@ -58,12 +68,13 @@ void TowerOfHanoi::Run()
 
 void TowerOfHanoi::Restart()
 {
-	m_StackList.clear();
+	this->Clean();
 }
 
 void TowerOfHanoi::Clean()
 {
-	m_StackList.clear();
+	for (size_t i = 0; i < s_NumberOfTowers; i++)
+		m_StackList[i]._Get_container().~deque();
 }
 
 void TowerOfHanoi::HandleInput(char p_Input)
@@ -73,19 +84,15 @@ void TowerOfHanoi::HandleInput(char p_Input)
 	}
 }
 
-void TowerOfHanoi::InitializeDisks(size_t p_NumOfTowers)
+void TowerOfHanoi::InitializeDisks()
 {
-	m_StackList.clear();
-	m_StackList.resize(p_NumOfTowers);
-	for (size_t i = 0; i < p_NumOfTowers; i++)
-		m_StackList[0].emplace(p_NumOfTowers - i);
+	for (size_t i = 0; i < s_NumberOfTowers; i++)
+		m_StackList[0].emplace(s_NumberOfTowers - i);
 }
 
 void TowerOfHanoi::UpdateState()
 {
-	size_t numOfTowers = m_StackList.size();
-
-	if (m_StackList[numOfTowers - 1].size() == numOfTowers)
+	if (m_StackList[s_NumberOfTowers - 1].size() == s_NumberOfTowers)
 		m_CurrentState = TOHState::Won;
 }
 

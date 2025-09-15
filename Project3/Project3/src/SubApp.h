@@ -45,6 +45,10 @@ public:
 	
 	UserStats GetUserStats() const;
 
+	void BeginTimer();
+
+	float GetDuration() const;
+
 private:
 	/*
 	* The Purpose of HandleInput() is to do varying things

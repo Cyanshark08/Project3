@@ -1,6 +1,6 @@
 #pragma once
 #include <stack>
-#include <vector>
+#include <array>
 #include <string>
 #include "ExceptionInterface.h"
 #include "Disk.h"
@@ -18,9 +18,10 @@ class TowerOfHanoi : public SubApp
 {
 public:
 	TowerOfHanoi();
-	TowerOfHanoi(size_t p_NumOfTowers);
 	void MoveDisk(size_t p_OldTower, size_t p_NewTower);
 	TOHState GetState() const;
+
+	void DisplayGame() const;
 
 	void Run() override;
 	void Restart() override;
@@ -43,13 +44,16 @@ public:
 	};
 
 private:
-	void InitializeDisks(size_t p_NumOfTowers);
+	void InitializeDisks();
 	void UpdateState();
 
 	void HandleInput(char p_Input) override;
 
 private:
-	std::vector<std::stack<Disk>> m_StackList;
+	constexpr static const uint8_t s_NumberOfTowers = 3ui8;
+
+private:
+	std::array<std::stack<Disk>, 3> m_StackList;
 	TOHState m_CurrentState;
 	size_t m_MoveCount;
 

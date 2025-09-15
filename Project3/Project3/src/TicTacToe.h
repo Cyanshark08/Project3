@@ -1,7 +1,6 @@
 #pragma once
 #include "SubApp.h"
 #include "ExceptionInterface.h"
-#include "Input.h"
 
 #include <iostream>
 #include <vector>
@@ -28,6 +27,8 @@ private:
 	void displayBoard() const;
 
 	void displayInfo() const;
+
+	void HandleInput(char p_Input) override;
 
 // exception errors
 public:
