@@ -39,8 +39,9 @@ void NQueens::Run()
 
             // Get user input
             std::cout << "\n\tEnter row and column to place/remove a queen (e.g., 1 2), or 0 0 to give up: ";
-            size_t row = Input::inputInteger("\tRow: ", 0, m_BoardSize);
-            size_t col = Input::inputInteger("\tColumn: ", 0, m_BoardSize);
+            int row, col;
+            row = Input::inputInteger("\tRow: ", 0, static_cast<int>(m_BoardSize));
+            col = Input::inputInteger("\tColumn: ", 0, static_cast<int>(m_BoardSize));
 
             if (row == 0 && col == 0)
             {
