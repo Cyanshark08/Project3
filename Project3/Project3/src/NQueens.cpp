@@ -3,10 +3,11 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <vector>
 
 NQueens::NQueens()
     : SubApp(AppID::NQueens),
-    m_BoardSize(8),
+    m_BoardSize(4), // Changed default to 4 since 1 is valid but might be too trivial
     m_QueensPlaced(0),
     m_Moves(0)
 {
@@ -18,8 +19,29 @@ void NQueens::Run()
     std::system("cls");
     DisplayInfo();
 
-    // Get board size from user
-    m_BoardSize = Input::inputInteger("\n\tEnter the size of the board (4-16): ", 4, 16);
+    // Get board size from user with valid range 1-16 excluding 2 and 3
+    std::vector<int> validSizes;
+    for (int i = 1; i <= 16; i++) {
+        if (i != 2 && i != 3) {
+            validSizes.push_back(i);
+        }
+    }
+
+    std::cout << "\n\tValid board sizes: ";
+    for (size_t i = 0; i < validSizes.size(); i++) {
+        std::cout << validSizes[i];
+        if (i < validSizes.size() - 1) std::cout << ", ";
+    }
+    std::cout << "\n";
+
+    m_BoardSize = Input::inputInteger("\n\tEnter the size of the board (1-16, excluding 2 and 3): ", 1, 16);
+
+    // Validate that size is not 2 or 3
+    while (m_BoardSize == 2 || m_BoardSize == 3) {
+        std::cout << "\n\tInvalid size. Size 2 and 3 are not allowed for the N-Queens problem.\n";
+        m_BoardSize = Input::inputInteger("\tPlease enter a valid size (1-16, excluding 2 and 3): ", 1, 16);
+    }
+
     InitializeBoard(m_BoardSize);
 
     int games = 0;
@@ -57,8 +79,14 @@ void NQueens::Run()
 
             if (row < m_BoardSize && col < m_BoardSize)
             {
+                // Only count as a move if we successfully place a queen
+                // (removing queens doesn't count as a move toward solving)
+                if (m_Board[row][col] == 0)
+                {
+                    m_Moves++;
+                }
+
                 ToggleQueen(row, col);
-                m_Moves++;
 
                 if (!IsValidConfiguration())
                 {
@@ -86,7 +114,13 @@ void NQueens::Run()
             char changeSize = Input::inputChar("\tChange board size? (Y-yes or N-no): ", 'Y', 'N');
             if (changeSize == 'Y')
             {
-                m_BoardSize = Input::inputInteger("\tEnter new board size (4-16): ", 4, 16);
+                m_BoardSize = Input::inputInteger("\tEnter new board size (1-16, excluding 2 and 3): ", 1, 16);
+
+                // Validate that new size is not 2 or 3
+                while (m_BoardSize == 2 || m_BoardSize == 3) {
+                    std::cout << "\n\tInvalid size. Size 2 and 3 are not allowed for the N-Queens problem.\n";
+                    m_BoardSize = Input::inputInteger("\tPlease enter a valid size (1-16, excluding 2 and 3): ", 1, 16);
+                }
             }
 
             Restart();
@@ -153,8 +187,16 @@ void NQueens::ToggleQueen(size_t row, size_t col)
 
     if (m_Board[row][col] == 0)
     {
-        m_Board[row][col] = 1;
-        m_QueensPlaced++;
+        // Check if the position is safe before placing a queen
+        if (IsSafe(row, col))
+        {
+            m_Board[row][col] = 1;
+            m_QueensPlaced++;
+        }
+        else
+        {
+            std::cout << "\n\tCannot place queen here! This position is attacked by another queen.\n";
+        }
     }
     else
     {
@@ -239,26 +281,30 @@ bool NQueens::IsSafe(size_t row, size_t col) const
     }
 
     // Check upper left diagonal
-    for (size_t i = row, j = col; i >= 0 && j >= 0; i--, j--)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i--, j--)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check upper right diagonal
-    for (size_t i = row, j = col; i >= 0 && j < m_BoardSize; i--, j++)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i--, j++)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check lower left diagonal
-    for (size_t i = row, j = col; i < m_BoardSize && j >= 0; i++, j--)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i++, j--)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check lower right diagonal
     for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i++, j++)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
@@ -319,10 +365,10 @@ void NQueens::DisplayBoard() const
 
 void NQueens::DisplayInfo() const
 {
-    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard";
+    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8ï¿½8 chessboard";
     std::cout << "\n\tso that no two queens threaten each other. Thus, a solution requires that no two queens";
     std::cout << "\n\tshare the same row, column, or diagonal. The puzzle can be generalized to n queens on";
-    std::cout << "\n\tan n×n board.";
+    std::cout << "\n\tan nï¿½n board.";
     std::cout << "\n\tThis program allows you to play the n-Queens game. You can place queens on the board";
     std::cout << "\n\tby specifying their positions. The goal is to place all queens without any conflicts.";
     std::cout << "\n\tTime will be recorded for the fastest and the slowest game. Average time will";
