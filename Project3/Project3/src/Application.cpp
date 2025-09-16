@@ -33,6 +33,7 @@ void Application::Run()
 				break;
 			case AppID::NQueens:
 				m_NQueens.Run();
+				m_NQueens.Cleanstats();
 				break;
 			}
 
@@ -47,6 +48,7 @@ void Application::Clean()
 {
 	m_TicTacToe.Clean();
 	m_TowerOfHanoi.Clean();
+	m_NQueens.Clean();
 
 }
 

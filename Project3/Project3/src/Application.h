@@ -40,7 +40,7 @@ private:
 	AppID m_CurrentSubApp;
 	TowerOfHanoi m_TowerOfHanoi;
 	TicTacToe m_TicTacToe;
-	NQueens m_NQueens;  // Add this member
+	NQueens m_NQueens;
 
 };
 
