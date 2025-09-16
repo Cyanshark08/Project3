@@ -2,6 +2,7 @@
 #include "Input.h"
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 NQueens::NQueens()
     : SubApp(AppID::NQueens),
@@ -266,44 +267,54 @@ bool NQueens::IsSafe(size_t row, size_t col) const
 
 void NQueens::DisplayBoard() const
 {
-    std::cout << "\n\tCurrent Board (" << m_QueensPlaced << "/" << m_BoardSize << " queens placed):\n\n";
+    std::stringstream ss;
 
-    // Print column numbers
-    std::cout << "\t   ";
-    for (size_t j = 0; j < m_BoardSize; j++)
+    ss << "\n\tCurrent Board (" << m_QueensPlaced << "/" << m_BoardSize << " queens placed):";
+
+    size_t rowWidth = m_BoardSize * 2 + 1;
+
+    ss << "\n\n\t" << std::string(1, 201) << std::string(rowWidth - 2, 205) << std::string(1, 187);
+
+    size_t rowIter{ 0 }, columnIter{ 0 };
+
+    for (size_t i = 1; i < m_BoardSize * 2; i++)
     {
-        std::cout << std::setw(3) << j + 1;
-    }
-    std::cout << "\n";
-
-    // Print top border
-    std::cout << "\t  " << std::string(3 * m_BoardSize + 1, '-') << "\n";
-
-    for (size_t i = 0; i < m_BoardSize; i++)
-    {
-        // Print row number
-        std::cout << "\t" << std::setw(2) << i + 1 << "|";
-
-        for (size_t j = 0; j < m_BoardSize; j++)
+        ss << "\n\t" << std::string(1, 186);
+        for(size_t j = 1; j < m_BoardSize * 2; j++)
         {
-            if (m_Board[i][j] == 1)
+            if (i % 2)
             {
-                std::cout << " Q ";
+                if (j % 2)
+                {
+                    ss << (m_Board[rowIter][columnIter] ? 'Q' : ' ');
+                    columnIter++;
+                }
+                else
+                    ss << std::string(1, 179);
+
             }
             else
             {
-                // Alternate colors for checkerboard pattern
-                if ((i + j) % 2 == 0)
-                    std::cout << "   ";
+                if (j % 2)
+                    ss << '_';
                 else
-                    std::cout << " . ";
+                    ss << std::string(1,179);
             }
+            
         }
-        std::cout << "|\n";
+
+
+        columnIter = 0;
+
+        if (i % 2)
+            rowIter++;
+
+        ss << std::string(1, 186);
     }
 
-    // Print bottom border
-    std::cout << "\t  " << std::string(3 * m_BoardSize + 1, '-') << "\n";
+    ss << "\n\t" << std::string(1, 200) << std::string(rowWidth - 2, 205) << std::string(1, 188);
+
+    printf("%s", ss.str().c_str());
 }
 
 void NQueens::DisplayInfo() const

@@ -76,7 +76,7 @@ private:
     bool IsSolved() const;
 
 private:
-    std::vector<std::vector<int>> m_Board;
+    std::vector<std::vector<bool>> m_Board;
     size_t m_BoardSize;
     size_t m_QueensPlaced;
     size_t m_Moves;
