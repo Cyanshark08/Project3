@@ -78,8 +78,14 @@ void NQueens::Run()
 
             if (row < m_BoardSize && col < m_BoardSize)
             {
+                // Only count as a move if we successfully place a queen
+                // (removing queens doesn't count as a move toward solving)
+                if (m_Board[row][col] == 0)
+                {
+                    m_Moves++;
+                }
+
                 ToggleQueen(row, col);
-                m_Moves++;
 
                 if (!IsValidConfiguration())
                 {
@@ -180,8 +186,16 @@ void NQueens::ToggleQueen(size_t row, size_t col)
 
     if (m_Board[row][col] == 0)
     {
-        m_Board[row][col] = 1;
-        m_QueensPlaced++;
+        // Check if the position is safe before placing a queen
+        if (IsSafe(row, col))
+        {
+            m_Board[row][col] = 1;
+            m_QueensPlaced++;
+        }
+        else
+        {
+            std::cout << "\n\tCannot place queen here! This position is attacked by another queen.\n";
+        }
     }
     else
     {
@@ -266,26 +280,30 @@ bool NQueens::IsSafe(size_t row, size_t col) const
     }
 
     // Check upper left diagonal
-    for (size_t i = row, j = col; i >= 0 && j >= 0; i--, j--)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i--, j--)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check upper right diagonal
-    for (size_t i = row, j = col; i >= 0 && j < m_BoardSize; i--, j++)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i--, j++)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check lower left diagonal
-    for (size_t i = row, j = col; i < m_BoardSize && j >= 0; i++, j--)
+    for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i++, j--)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
     // Check lower right diagonal
     for (size_t i = row, j = col; i < m_BoardSize && j < m_BoardSize; i++, j++)
     {
+        if (i >= m_BoardSize || j >= m_BoardSize) break;
         if (m_Board[i][j] == 1) return false;
     }
 
