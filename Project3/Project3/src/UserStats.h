@@ -15,6 +15,7 @@ public:
 
 	void AddTime(float p_Duration, size_t p_NumberOfMoves);
 
+	bool noTimes() const;
 	void Clean();
 
 private:

@@ -56,6 +56,10 @@ void UserStats::AddTime(float p_Duration, size_t p_NumberOfMoves)
     m_Times.push_back(p_Duration);
 }
 
+bool UserStats::noTimes() const
+{
+    return m_Times.empty();
+}
 void UserStats::Clean()
 {
     m_LongestMoves = 0;
