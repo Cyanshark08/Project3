@@ -131,7 +131,11 @@ void TicTacToe::Run()
 		// ask if the user wants to play again
 		char again = Input::inputChar("\n\tPlay again? (Y-yes or N-no): ", 'Y', 'N');
 		if (again == 'Y')
+		{
 			Restart();
+			std::system("cls");
+			std::cout << "\n\tNew Game starting.";
+		}
 
 		else
 		{
