@@ -41,14 +41,39 @@ public:
 	*/
 	virtual void Clean() = 0;
 
+	/*
+	* Precondition: None
+	* 
+	* Postcondition: Cleans the m_UserStatistics
+	*/
 	void CleanStats();
 	
+	/*
+	* Precondition: Must be initialized
+	*
+	* Postcondition: Returns m_AppID
+	*/
 	AppID GetAppID() const;
 	
+	/*
+	* Precondition: Must be initialized
+	*
+	* Postcondition: Returns m_UserStatistics
+	*/
 	UserStats GetUserStats() const;
 
+	/*
+	* Precondition: Must be initialized
+	*
+	* Postcondition: Resets App timer; Sets initial time to current time
+	*/
 	void BeginTimer();
 
+	/*
+	* Precondition: Timer must be initialized
+	*
+	* Postcondition: Gets time since BeginTimer() was last called
+	*/
 	void EndTimer(size_t p_NumberOfMoves);
 
 private:

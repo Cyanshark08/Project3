@@ -18,10 +18,33 @@ class TowerOfHanoi : public SubApp
 {
 public:
 	TowerOfHanoi();
+
+	/*
+	* Precondition: start tower must not be empty; end tower top disk must be of lower size than the start tower disk.
+	* 
+	* Postcondition: moves the disk on top of start tower to end tower
+	*/
 	void MoveDisk(size_t p_OldTower, size_t p_NewTower);
+
+	/*
+	* Precondition: None
+	*
+	* Postcondition: Sets the number of disks
+	*/
 	void SetNumberOfDisks(size_t p_NumOfDisks);
+
+	/*
+	* Precondition: None
+	*
+	* Postcondition: Returns state
+	*/
 	TOHState GetState() const;
 
+	/*
+	* Precondition: Game must be initialized and in a valid state
+	*
+	* Postcondition: Displays Tower Of Hanoi stacks
+	*/
 	void DisplayGame() const;
 
 	void Run() override;

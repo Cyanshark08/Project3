@@ -7,7 +7,8 @@
 TowerOfHanoi::TowerOfHanoi()
 	: SubApp(AppID::TowerOfHanoi),
 	m_CurrentState(TOHState::Introduction),
-	m_NumberOfDisks(3)
+	m_NumberOfDisks(3),
+	m_MoveCount(0)
 {}
 
 void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
