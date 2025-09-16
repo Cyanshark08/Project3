@@ -60,18 +60,26 @@ void NQueens::Run()
         {
             DisplayBoard();
 
-            // Get user input
-            std::cout << "\n\tEnter row and column to place/remove a queen (e.g., 1 2), or 0 0 to give up: ";
-            int row, col;
-            row = Input::inputInteger("\tRow: ", 0, static_cast<int>(m_BoardSize));
-            col = Input::inputInteger("\tColumn: ", 0, static_cast<int>(m_BoardSize));
+            // Display menu options
+            std::cout << "\n\tMenu Options:\n";
+            std::cout << "\t1. Place a queen\n";
+            std::cout << "\t2. Remove a queen\n";
+            std::cout << "\t0. Give up\n";
 
-            if (row == 0 && col == 0)
+            int choice = Input::inputInteger("\n\tChoose an option (0-2): ", 0, 2);
+
+            if (choice == 0)
             {
                 std::cout << "\n\tYou gave up. The puzzle remains unsolved.";
                 invalidTime = true;
                 break;
             }
+
+            // Get position input
+            std::cout << "\n\tEnter row and column: ";
+            int row, col;
+            row = Input::inputInteger("\tRow: ", 1, static_cast<int>(m_BoardSize));
+            col = Input::inputInteger("\tColumn: ", 1, static_cast<int>(m_BoardSize));
 
             // Convert to 0-based indexing
             row--;
@@ -79,14 +87,41 @@ void NQueens::Run()
 
             if (row < m_BoardSize && col < m_BoardSize)
             {
-                // Only count as a move if we successfully place a queen
-                // (removing queens doesn't count as a move toward solving)
-                if (m_Board[row][col] == 0)
+                if (choice == 1) // Place queen
                 {
-                    m_Moves++;
+                    if (m_Board[row][col] == 0)
+                    {
+                        // Check if the position is safe before placing a queen
+                        if (IsSafe(row, col))
+                        {
+                            m_Board[row][col] = 1;
+                            m_QueensPlaced++;
+                            m_Moves++;
+                            std::cout << "\n\tQueen placed successfully at position (" << row + 1 << ", " << col + 1 << ")\n";
+                        }
+                        else
+                        {
+                            std::cout << "\n\tCannot place queen here! This position is attacked by another queen.\n";
+                        }
+                    }
+                    else
+                    {
+                        std::cout << "\n\tThere is already a queen at this position!\n";
+                    }
                 }
-
-                ToggleQueen(row, col);
+                else if (choice == 2) // Remove queen
+                {
+                    if (m_Board[row][col] == 1)
+                    {
+                        m_Board[row][col] = 0;
+                        m_QueensPlaced--;
+                        std::cout << "\n\tQueen removed successfully from position (" << row + 1 << ", " << col + 1 << ")\n";
+                    }
+                    else
+                    {
+                        std::cout << "\n\tNo queen at this position to remove!\n";
+                    }
+                }
 
                 if (!IsValidConfiguration())
                 {
@@ -326,7 +361,7 @@ void NQueens::DisplayBoard() const
     for (size_t i = 1; i < m_BoardSize * 2; i++)
     {
         ss << "\n\t" << std::string(1, 186);
-        for(size_t j = 1; j < m_BoardSize * 2; j++)
+        for (size_t j = 1; j < m_BoardSize * 2; j++)
         {
             if (i % 2)
             {
@@ -344,9 +379,9 @@ void NQueens::DisplayBoard() const
                 if (j % 2)
                     ss << '_';
                 else
-                    ss << std::string(1,179);
+                    ss << std::string(1, 179);
             }
-            
+
         }
 
 
@@ -365,10 +400,10 @@ void NQueens::DisplayBoard() const
 
 void NQueens::DisplayInfo() const
 {
-    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8�8 chessboard";
+    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard";
     std::cout << "\n\tso that no two queens threaten each other. Thus, a solution requires that no two queens";
     std::cout << "\n\tshare the same row, column, or diagonal. The puzzle can be generalized to n queens on";
-    std::cout << "\n\tan n�n board.";
+    std::cout << "\n\tan n×n board.";
     std::cout << "\n\tThis program allows you to play the n-Queens game. You can place queens on the board";
     std::cout << "\n\tby specifying their positions. The goal is to place all queens without any conflicts.";
     std::cout << "\n\tTime will be recorded for the fastest and the slowest game. Average time will";
