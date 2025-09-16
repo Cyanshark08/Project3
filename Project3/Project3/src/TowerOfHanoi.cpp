@@ -179,7 +179,7 @@ void TowerOfHanoi::Run()
 			}
 			break;
 		case TOHState::Won:
-			printf("\n\tCongratulations! You have solved the game in %d moves.", m_MoveCount);
+			printf("\n\tCongratulations! You have solved the game in %d moves. ", m_MoveCount);
 			this->EndTimer(m_MoveCount);
 			switch (Input::inputChar("Play again? (Y-yes, N-no)", "YN"))
 			{

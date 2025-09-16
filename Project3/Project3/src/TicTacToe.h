@@ -30,13 +30,13 @@ public:
 
 	/*
 	* PreCondition: N/A
-	* PostCondition: Reset the board to its initial state (no squares taken)
+	* PostCondition: Reset the board to its initial state (blank board)
 	*/
 	void Restart() override;
 
 	/*
 	* PreCondition: N/A
-	* PostCondition: Reset the size, games, and board
+	* PostCondition: Reset the size and board
 	*/
 	void Clean() override;
 
@@ -109,6 +109,7 @@ private:
 	* PostCondition: Display the TicTacToe informational paragraph
 	*/
 	void displayInfo() const;
+
 
 	void HandleInput(char p_Input) override;
 
