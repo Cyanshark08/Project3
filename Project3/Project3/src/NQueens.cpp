@@ -400,10 +400,10 @@ void NQueens::DisplayBoard() const
 
 void NQueens::DisplayInfo() const
 {
-    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard";
+    std::cout << "\n\tThe eight queens puzzle is the problem of placing eight chess queens on an 8x8 chessboard";
     std::cout << "\n\tso that no two queens threaten each other. Thus, a solution requires that no two queens";
     std::cout << "\n\tshare the same row, column, or diagonal. The puzzle can be generalized to n queens on";
-    std::cout << "\n\tan n×n board.";
+    std::cout << "\n\tan nxn board.";
     std::cout << "\n\tThis program allows you to play the n-Queens game. You can place queens on the board";
     std::cout << "\n\tby specifying their positions. The goal is to place all queens without any conflicts.";
     std::cout << "\n\tTime will be recorded for the fastest and the slowest game. Average time will";
