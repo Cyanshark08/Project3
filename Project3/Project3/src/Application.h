@@ -17,8 +17,18 @@ public:
 
 	Application();
 
+	/*
+	* Precondition: None
+	* 
+	* Postcondition: Initializes main application loop; handles each SubApp
+	*/
 	void Run();
 
+	/*
+	* Precondition: None
+	*
+	* Postcondition: Cleans all SubApps
+	*/
 	void Clean();
 
 private:

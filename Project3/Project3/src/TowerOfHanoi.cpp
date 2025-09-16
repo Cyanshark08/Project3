@@ -7,7 +7,8 @@
 TowerOfHanoi::TowerOfHanoi()
 	: SubApp(AppID::TowerOfHanoi),
 	m_CurrentState(TOHState::Introduction),
-	m_NumberOfDisks(3)
+	m_NumberOfDisks(3),
+	m_MoveCount(0)
 {}
 
 void TowerOfHanoi::MoveDisk(size_t p_OldTower, size_t p_NewTower)
@@ -179,7 +180,7 @@ void TowerOfHanoi::Run()
 			}
 			break;
 		case TOHState::Won:
-			printf("\n\tCongratulations! You have solved the game in %d moves.", m_MoveCount);
+			printf("\n\tCongratulations! You have solved the game in %d moves. ", m_MoveCount);
 			this->EndTimer(m_MoveCount);
 			switch (Input::inputChar("Play again? (Y-yes, N-no)", "YN"))
 			{
