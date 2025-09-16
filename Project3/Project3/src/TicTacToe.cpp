@@ -36,12 +36,16 @@ void TicTacToe::Run()
 	size_t newSize = Input::inputInteger("\n\tEnter the size of the board (larger size = longer computer time): ", true);
 	setSize(newSize);
 	m_Board.assign(size, std::vector<int>(size, 0));
+	int games = 0;
 
 	std::cout << "\n";
 	do
 	{
 		int moves = 0;
+		bool invalidTime = false;
 		std::cout << "\n\tGame begin.\n\n";
+		games++;
+
 		displayBoard();
 		do
 		{
@@ -77,6 +81,7 @@ void TicTacToe::Run()
 			else if (!isMovesLeft() && checkWinner() == 0)
 			{
 				std::cout << "\n\tTie.";
+				invalidTime = true;
 				break;
 			}
 			// player inputted an area already taken
@@ -106,6 +111,7 @@ void TicTacToe::Run()
 			else if (!isMovesLeft() && checkWinner() == 0)
 			{
 				std::cout << "\n\tTie.";
+				invalidTime = true;
 				break;
 			}
 
@@ -116,8 +122,11 @@ void TicTacToe::Run()
 				break;
 			}
 		} while (true);
-		// end the timer
-		EndTimer(moves);
+		// end the timer if no tie
+		if (!invalidTime)
+		{
+			EndTimer(moves);
+		}
 
 		// ask if the user wants to play again
 		char again = Input::inputChar("\n\tPlay again? (Y-yes or N-no): ", 'Y', 'N');
@@ -127,7 +136,24 @@ void TicTacToe::Run()
 		else
 		{
 			// display game statistics
-			std::cout << "\n\tGame statistics: ";
+			UserStats stats = GetUserStats();
+			
+			std::cout << "\n\tGame statistics: \n";
+			std::cout << "\n\t" << games << " game(s) of TicTacToe were played.";
+
+			if (stats.noTimes())
+			{
+				std::cout << "\n\t\tNo Game statistic collected.";
+				std::cout << "\n";
+			}
+			else
+			{
+				std::cout << "\n\t\tThe fastest time was " << stats.GetShortestTime() << " seconds in " << stats.GetShortestMoves() << " move(s)";
+				std::cout << "\n\t\tThe slowest time was " << stats.GetLongestTime() << " seconds in " << stats.GetLongestMoves() << " move(s)";
+				std::cout << "\n\t\tThe average time was " << stats.GetAverageTime() << " seconds";
+				std::cout << "\n";
+			}
+			std::cout << "\n";
 			Clean();
 			std::system("pause");
 			break;
